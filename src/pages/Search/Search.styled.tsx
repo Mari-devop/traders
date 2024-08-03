@@ -32,8 +32,8 @@ export const SearchBar = styled.div`
     font-size: 16px;
     width: 500px;
     position: relative;
-
-  
+    background-color: var(--white-color);
+    color: var(--secondary-color)
   }
 
   svg {
@@ -104,8 +104,6 @@ export const RadioWrapper = styled.div`
     background: white;
     transition: background 0.3s;
   }
-
- 
 `;
 
 export const Results = styled.div`

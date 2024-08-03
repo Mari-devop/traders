@@ -26,40 +26,65 @@ export const Header = styled.div`
 export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  margin-top: 15px;
+  border-bottom: 1px solid var(--border-color);
+
+  &.striped tbody tr.striped {
+    background-color: var(--gray-lighter-color);
+  }
 `;
 
 export const TableBodyContainer = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
+`;
+
+export const TableBody2Container = styled.tbody`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const TableColumn = styled.div`
   display: flex;
   flex-direction: column;
-  width: 48%; 
-  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 20px;
+  width: 100%;
+  margin-right: 350px;
 `;
 
 export const TableRow = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0px 5px 0px 15px;
+  padding: 0px 0px 0px 15px;
+  font-size: 15px;
+  font-weight: 500;
 `;
 
-export const TableHeader = styled.div`
+export const TableRow2 = styled.tr`
+  display: flex;
+  flex-direction: row;
+  padding-left: 10px;
+
+  & > th, & > td {
+    flex: 1;
+    padding: 8px;
+  }
+
+  & > .first-column {
+    flex: 2;
+  }
+`;
+
+export const TableHeader = styled.th`
   font-weight: 800;
   text-align: left;
   padding: 8px 5px 0px 8px;
   color: var(--primary-text-color);
-  width: 50%;
 `;
 
-export const TableCell = styled.div`
+export const TableCell = styled.td`
   padding: 8px;
   color: var(--primary-text-color);
-  width: 50%;
    
   a {
     color: var(--link-color);
@@ -69,7 +94,7 @@ export const TableCell = styled.div`
 
 export const BackButton = styled.button`
   padding: 10px 15px;
-  margin: 0 20px 20px;
+  margin: 20px 20px 20px;
   font-size: 18px;
   background-color: var(--danger-color);
   color: white;

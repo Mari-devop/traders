@@ -1,10 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchResults from '../../components/searchResult/SearchResult';
-import { productsData } from '../../mockData/ProductsMockData';
-import { customersData } from '../../mockData/CustomersMockData';
-import { Product, Customer } from '../../types';
+import { Product, Customer,  ApiCustomer, ApiProduct } from '../../types';
 import { Container, SearchBar, RadioWrapper, Results } from './Search.styled';
+import { useQuery } from 'react-query';
+
+const fetchProducts = async (): Promise<Product[]> => {
+  const response = await fetch(`https://northwindtraders-sparkling-dawn-9488.fly.dev/products`);
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  const data = await response.json();
+  return data.data.map((product: ApiProduct) => ({
+    id: product.productId.toString(),
+    name: product.name,  
+    quantityPerUnit: product.quantityPerUnit,
+    unitPrice: product.price,
+    unitsInStock: product.stock,
+    unitsOnOrder: product.orders,
+  }));
+};
+
+const fetchCustomers = async (): Promise<Customer[]> => {
+  const response = await fetch(`https://northwindtraders-sparkling-dawn-9488.fly.dev/customers`);
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  const data = await response.json();
+  return data.data.map((customer: ApiCustomer): Customer => ({
+    id: customer.customerId.toString(),
+    company: customer.company,
+    contact: customer.contact,
+    title: customer.title,
+    address: customer.address,
+    city: customer.city,
+    postalCode: customer.postalCode,
+    region: customer.region,
+    country: customer.country,
+    phone: customer.phone,
+    fax: customer.fax,
+  }));
+};
 
 const Search: React.FC = () => {
   const [keyword, setKeyword] = useState<string>('');
@@ -12,14 +48,17 @@ const Search: React.FC = () => {
   const [results, setResults] = useState<Product[] | Customer[]>([]);
   const [searched, setSearched] = useState<boolean>(false);
 
+  const { data: products } = useQuery('products', fetchProducts);
+  const { data: customers } = useQuery('customers', fetchCustomers);
+
   const handleSearch = () => {
     setSearched(true);
-    if (table === 'products') {
-      setResults(productsData.filter(product => 
-        product.name.toLowerCase().includes(keyword.toLowerCase())
+    if (table === 'products' && products) {
+      setResults(products.filter(product => 
+        product.name.toLowerCase().includes(keyword.toLowerCase())  
       ));
-    } else {
-      setResults(customersData.filter(customer => 
+    } else if (customers) {
+      setResults(customers.filter(customer => 
         customer.company.toLowerCase().includes(keyword.toLowerCase())
       ));
     }
@@ -35,7 +74,6 @@ const Search: React.FC = () => {
   useEffect(() => {
     setResults([]);
     setSearched(false);
-
   }, [table]);
 
   return (

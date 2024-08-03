@@ -9,7 +9,7 @@ interface HeaderConfig {
   key: string;
 }
 
-interface TableComponentProps<T extends { id: number }> {
+interface TableComponentProps<T extends { id: string }> {
   title: string;
   headers: HeaderConfig[];
   data: T[];
@@ -17,11 +17,12 @@ interface TableComponentProps<T extends { id: number }> {
   rowsPerPage: number;
   totalRows: number;
   onChangePage: (newPage: number) => void;
+  onReload: () => void;
   linkPrefix: string;
   showAvatar?: boolean;
 }
 
-const TableComponent = <T extends { id: number }>({
+const TableComponent = <T extends { id: string }>({
   title,
   headers,
   data,
@@ -29,18 +30,15 @@ const TableComponent = <T extends { id: number }>({
   rowsPerPage,
   totalRows,
   onChangePage,
+  onReload,
   linkPrefix,
   showAvatar = false,
 }: TableComponentProps<T>) => {
-  const startIndex = (page - 1) * rowsPerPage;
-  const endIndex = startIndex + rowsPerPage;
-  const currentRows = data.slice(startIndex, endIndex);
-
   return (
     <TableContainerStyled>
       <Header>
         <h2>{title}</h2>
-        <IconButton>
+        <IconButton onClick={onReload}>
           <RedoIcon />
         </IconButton>
       </Header>
@@ -49,7 +47,7 @@ const TableComponent = <T extends { id: number }>({
           <TableHead>
             <TableRow>
               {headers.map((header, index) =>
-                index === 0 ? (
+                index === 0 && showAvatar ? (
                   <FirstTableHeader key={header.key}>{header.label}</FirstTableHeader>
                 ) : (
                   <TableHeader key={header.key}>{header.label}</TableHeader>
@@ -58,13 +56,13 @@ const TableComponent = <T extends { id: number }>({
             </TableRow>
           </TableHead>
           <TableBody>
-            {currentRows.map((row) => (
+            {data.map((row) => (
               <StyledTableRow key={row.id}>
-                {headers.map((header, index) => (
-                  <StyledTableCell key={header.key}>
-                    {index === 0 ? (
+                {headers.map((header) => (
+                  <StyledTableCell key={`${row.id}-${header.key}`}>
+                    {header.key === 'id' || header.key === 'company' || header.key === 'name' || header.key === 'companyName' ? (
                       <StyledLink to={`/${linkPrefix}/${row.id}`}>
-                        {showAvatar && (
+                        {showAvatar && (header.key === 'company' || header.key === 'name' || header.key === 'companyName') && (
                           <img src={avatar} alt="avatar" width={20} height={20} style={{ marginRight: '25px', verticalAlign: 'middle' }} />
                         )}
                         {String(row[header.key as keyof T])}
@@ -82,7 +80,7 @@ const TableComponent = <T extends { id: number }>({
           <Pagination
             count={Math.ceil(totalRows / rowsPerPage)}
             page={page}
-            onChange={(event, page) => onChangePage(page)}
+            onChange={(event, newPage) => onChangePage(newPage)}
             shape="rounded"
             variant="outlined"
             hidePrevButton

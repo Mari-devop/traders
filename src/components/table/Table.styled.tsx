@@ -31,7 +31,7 @@ export const TableHeader = styled(TableCell)`
 `;
 
 export const FirstTableHeader = styled(TableHeader)`
-  padding-left: 65px !important;
+  padding-left: 60px !important;
 `;
 
 export const StyledTableCell = styled(TableCell)`

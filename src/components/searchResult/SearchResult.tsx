@@ -24,7 +24,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results, table }) => {
                 <ResultDetails>Quantity per unit: {(result as Product).quantityPerUnit},</ResultDetails>
                 <ResultDetails>Price: {(result as Product).unitPrice}, </ResultDetails>
                 <ResultDetails>Stock: {(result as Product).unitsInStock}, </ResultDetails>
-                <ResultDetails>Orders: {(result as Product).unitsInOrder}</ResultDetails>
+                <ResultDetails>Orders: {(result as Product).unitsOnOrder}</ResultDetails>
               </>
             ) : (
               <>

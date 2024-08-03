@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
+import { useQuery } from 'react-query';
 import TableComponent from '../../components/table/Table';
-import { Customer } from '../../types';
+import { fetchCustomers } from '../../api/fetch';
+import { Customer, ApiResponse, Log } from '../../types';
+import { useLogs } from '../../context/LogsContext';
 
-interface CustomersProps {
-  data: Customer[];
-}
-
-const Customers: React.FC<CustomersProps> = ({ data }) => {
+const Customers: React.FC = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 20;
-  const totalRows = data.length;
+  const { addLog } = useLogs();
+
+  const { data, error, isLoading, refetch } = useQuery<ApiResponse<Customer>>(['customers', page, rowsPerPage], () => fetchCustomers(page, rowsPerPage), {
+    keepPreviousData: true,
+    onSuccess: (data) => {
+      if (data.logs) {
+        data.logs.forEach((log: Log) => addLog(log));
+      }
+    }
+  });
+
+  const handleReload = () => {
+    refetch();
+  };
 
   const handleChangePage = (newPage: number) => {
     setPage(newPage);
@@ -23,15 +35,31 @@ const Customers: React.FC<CustomersProps> = ({ data }) => {
     { label: 'Country', key: 'country' },
   ];
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading data</div>;
+  }
+
+  if (!data) {
+    return <div>No data available</div>;
+  }
+
+  const totalRows = data.totalCount;
+  const customers = data.data;
+
   return (
     <TableComponent
       title="Customers"
       headers={headers}
-      data={data}
+      data={customers}
       page={page}
       rowsPerPage={rowsPerPage}
       totalRows={totalRows}
       onChangePage={handleChangePage}
+      onReload={handleReload}
       linkPrefix="customers"
       showAvatar={true}
     />
