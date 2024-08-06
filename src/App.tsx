@@ -1,5 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Home from './pages/Home/Home';
 import Dashboard from './pages/Dashboard/Dashboard';
@@ -26,22 +25,14 @@ const ContentContainer = styled.div`
 `;
 
 const App = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (location.pathname === '/') {
-      navigate('/home');
-    }
-  }, [location, navigate]);
-
   return (
     <div>
       <Navbar />
       <Sidebar />
       <ContentContainer>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/suppliers" element={<Suppliers />} />
           <Route path="/suppliers/:id" element={<UserPage title="Supplier" headers={supplierHeaders} backLink="/suppliers" fetchFunction={fetchSupplierById} />} />
