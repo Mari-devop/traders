@@ -127,7 +127,7 @@ const UserPage = <T,>({ title, headers, backLink, fetchFunction }: UserPageProps
       {hasProducts(entity) && entity.products.length > 0 && (
         <>
           <Header>
-            <h2>Products</h2>
+            <h2>Products in Order</h2>
           </Header>
           <Table className="striped">
             <thead>

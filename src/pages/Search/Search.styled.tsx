@@ -2,11 +2,47 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   padding: 20px;
-  margin-top: 70px;
+  margin-top: 60px;
   background-color: var(--white-color);
   border-radius: 5px;
   border: 1px solid var(--border-color);
-  width: 1070px;
+  width: 82vw;
+
+  @media (max-width: 1805px) {
+    width: 80vw;
+  }
+
+  @media (max-width: 1625px) {
+    width: 78vw;
+  }
+
+  @media (max-width: 1470px) {
+    width: 76vw;
+  }
+
+  @media (max-width: 1335px) {
+    width: 72vw;
+  }
+
+  @media (max-width: 1158px) {
+    width: 68vw;
+  }
+
+  @media (max-width: 1021px) {
+    width: 88vw;
+  }
+
+  @media (max-width: 762px) {
+    width: 84vw;
+  }
+
+   @media (max-width: 567px) {
+    width: 80vw;
+  }
+
+   @media (max-width: 472px) {
+    width: 76vw;
+  }
 `;
 
 export const SearchBar = styled.div`
@@ -24,16 +60,21 @@ export const SearchBar = styled.div`
 
   input {
     flex: 1;
-    padding: 11px 40px 11px 35px; 
+    padding: 11px 40px 11px 35px;
     border: 1px solid var(--secondary-color);
     border-radius: 4px;
     margin-right: 10px;
-    outline: none;
     font-size: 16px;
+    outline: none;
     width: 500px;
     position: relative;
     background-color: var(--white-color);
-    color: var(--secondary-color)
+    color: var(--black-color);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  input:focus {
+    box-shadow: 0 0 0 3px rgba(0, 0, 255, 0.2);
   }
 
   svg {
@@ -42,6 +83,18 @@ export const SearchBar = styled.div`
     top: 155px; 
     cursor: pointer;
     color: var(--primary-text-color);
+  }
+
+  @media (max-width: 688px) {
+    input {
+      width: 300px;
+    }
+  }
+
+  @media (max-width: 472px) {
+    input {
+      width: 200px;
+    }
   }
 `;
 
@@ -53,7 +106,7 @@ export const RadioWrapper = styled.div`
   justify-content: center;
 
   label {
-    font-weight: 800;
+    font-weight: 500;
     color: var(--primary-text-color);
   }
 
@@ -84,9 +137,15 @@ export const RadioWrapper = styled.div`
     top: 3px;
     width: 18px;
     height: 18px;
-    border: 2px solid var(--link-color);
+    border: 2px solid var(--secondary-color); 
     border-radius: 50%;
     background: white;
+    transition: border-color 0.3s;
+  }
+
+  input[type='radio']:focus + label:before,
+  input[type='radio']:checked + label:before {
+    border-color: var(--link-color);
   }
 
   input[type='radio']:checked + label:before {
@@ -110,7 +169,7 @@ export const Results = styled.div`
   h2 {
     margin-bottom: 10px;
     color: var(--primary-text-color);
-    font-size: 20px;
+    font-size: 18px;
   }
 
   p {

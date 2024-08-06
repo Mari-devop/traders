@@ -5,12 +5,13 @@ import { Supplier, ApiResponse, Log } from '../../types';
 import { fetchSuppliers } from '../../api/fetch';
 import { useLogs } from '../../context/LogsContext';
 
+
 const Suppliers: React.FC = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 20;
   const { addLog } = useLogs();
 
-  const { data, error, isLoading, refetch } = useQuery<ApiResponse<Supplier>>(['suppliers', page, rowsPerPage], () => fetchSuppliers(page, rowsPerPage), {
+  const { data, error, isLoading } = useQuery<ApiResponse<Supplier>>(['suppliers', page, rowsPerPage], () => fetchSuppliers(page, rowsPerPage), {
     keepPreviousData: true,
     onSuccess: (data) => {
       if (data.logs) {
@@ -20,8 +21,8 @@ const Suppliers: React.FC = () => {
   });
 
   const handleReload = () => {
-    refetch();
-  }
+    window.location.reload();
+  };
 
   const handleChangePage = (newPage: number) => {
     setPage(newPage);
@@ -51,18 +52,20 @@ const Suppliers: React.FC = () => {
   const suppliers = data.data;
 
   return (
-    <TableComponent
-      title="Suppliers"
-      headers={headers}
-      data={suppliers}
-      page={page}
-      rowsPerPage={rowsPerPage}
-      totalRows={totalRows}
-      onChangePage={handleChangePage}
-      onReload={handleReload}
-      linkPrefix="suppliers"
-      showAvatar={true}
-    />
+
+      <TableComponent
+        title="Suppliers"
+        headers={headers}
+        data={suppliers}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        totalRows={totalRows}
+        onChangePage={handleChangePage}
+        onReload={handleReload}
+        linkPrefix="suppliers"
+        showAvatar={true}
+      />
+
   );
 };
 

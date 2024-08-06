@@ -1,12 +1,44 @@
 import styled from 'styled-components';
 
 export const UserPageContainer = styled.div`
-  margin: 70px 0;
+  margin: 60px 0;
   padding: 0px;
   background-color: var(--white-color);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--gray-lightest-color);
   border-radius: 5px;
-  width: 1100px;
+  width: 84vw;
+
+  @media (max-width: 1728px) {
+    width: 82vw;
+  } 
+
+  @media (max-width: 1566px) {
+    width: 80vw;
+  } 
+
+  @media (max-width: 1430px) {
+    width: 78vw;
+  } 
+
+  @media (max-width: 1285px) {
+    width: 76vw;
+  } 
+
+  @media (max-width: 1175px) {
+    width: 74vw;
+  } 
+
+  @media (max-width: 1080px) {
+    width: 72vw;
+  }
+
+  @media (max-width: 1020px) {
+    width: 92vw;
+  }
+
+  @media (max-width: 749px) {
+    width: 88vw;
+  }
 `;
 
 export const Header = styled.div`
@@ -19,7 +51,8 @@ export const Header = styled.div`
     color: var(--primary-text-color);
     display: flex;
     gap: 10px;
-    padding-left: 15px;
+    padding-left: 25px;
+    font-weight: 800;
   }
 `;
 
@@ -27,16 +60,18 @@ export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
-  border-bottom: 1px solid var(--border-color);
+  
 
   &.striped tbody tr.striped {
-    background-color: var(--gray-lighter-color);
+   background-color: rgb(249 250 251);
   }
 `;
 
 export const TableBodyContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid var(--border-color);
 `;
 
 export const TableBody2Container = styled.tbody`
@@ -48,15 +83,20 @@ export const TableColumn = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 20px;
-  width: 100%;
+  width: 23vw;
   margin-right: 350px;
+
+  @media (max-width: 749px) {
+    width: 100%;
+    margin-right: 100px;
+  }
 `;
 
 export const TableRow = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0px 0px 0px 15px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
 `;
 
@@ -101,6 +141,7 @@ export const BackButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  
   &:hover {
     background-color: var(--danger-hover-color);
   }

@@ -1,6 +1,10 @@
-import React from 'react';
-import { Table, TableBody, TableRow, TableContainer, TableHead, Paper, IconButton, Pagination } from '@mui/material';
-import { TableContainerStyled, Header, TableHeader, FirstTableHeader, PaginationContainer, PageInfo, StyledTableRow, StyledTableCell, StyledLink } from './Table.styled';
+import React, { useEffect } from 'react';
+import { Table, TableBody, TableRow, TableHead, Pagination } from '@mui/material';
+import {
+  TableContainerStyled, TableContainer, Header, TableHeader, FirstTableHeader, PaginationContainer,
+  PageInfo, StyledTableRow, StyledTableCell, StyledLink, ResponsiveTableRow, ResponsiveTableCell,
+  ResponsiveTableContainer, ResponsiveTableAvatarCell
+} from './Table.styled';
 import RedoIcon from '@mui/icons-material/Redo';
 import avatar from '../../assets/images/Charlotte-Cooper.svg';
 
@@ -30,19 +34,22 @@ const TableComponent = <T extends { id: string }>({
   rowsPerPage,
   totalRows,
   onChangePage,
-  onReload,
   linkPrefix,
   showAvatar = false,
 }: TableComponentProps<T>) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
+
   return (
     <TableContainerStyled>
-      <Header>
-        <h2>{title}</h2>
-        <IconButton onClick={onReload}>
-          <RedoIcon />
-        </IconButton>
-      </Header>
-      <TableContainer component={Paper}>
+      <TableContainer>
+        <Header>
+          <h2>{title}</h2>
+          <button onClick={() => window.location.reload()}>
+            <RedoIcon />
+          </button>
+        </Header>
         <Table>
           <TableHead>
             <TableRow>
@@ -80,17 +87,100 @@ const TableComponent = <T extends { id: string }>({
           <Pagination
             count={Math.ceil(totalRows / rowsPerPage)}
             page={page}
-            onChange={(event, newPage) => onChangePage(newPage)}
+            onChange={(_, newPage) => onChangePage(newPage)}
             shape="rounded"
             variant="outlined"
             hidePrevButton
             hideNextButton
+            sx={{
+              '& .MuiPaginationItem-root': {
+                fontSize: '1.2rem',
+                minWidth: '2.5rem',
+                minHeight: '2.5rem',
+                backgroundColor: 'transparent',
+                border: 'none',
+                '&:hover': {
+                  border: '1px solid #000',
+                },
+                '&.Mui-selected': {
+                  border: '1px solid #999',
+                  '&:hover': {
+                    border: '1px solid #999',
+                    backgroundColor: 'transparent',
+                  },
+                },
+              },
+            }}
           />
           <PageInfo>
             Page {page} of {Math.ceil(totalRows / rowsPerPage)}
           </PageInfo>
         </PaginationContainer>
       </TableContainer>
+      <ResponsiveTableContainer>
+        <Header>
+          <h2>{title}</h2>
+          <button onClick={() => window.location.reload()}>
+            <RedoIcon />
+          </button>
+        </Header>
+        {data.map((row) => (
+          <ResponsiveTableRow key={row.id}>
+            {showAvatar && (
+              <ResponsiveTableAvatarCell>
+                <img src={avatar} alt="avatar" width={96} height={96} />
+              </ResponsiveTableAvatarCell>
+            )}
+            {headers.map((header) => (
+              <ResponsiveTableCell key={`${row.id}-${header.key}`}>
+                <span className="resp-header">{header.label}</span>
+                <span>
+                  {header.key === 'id' || header.key === 'company' || header.key === 'name' || header.key === 'companyName' ? (
+                    <StyledLink to={`/${linkPrefix}/${row.id}`}>
+                      {String(row[header.key as keyof T])}
+                    </StyledLink>
+                  ) : (
+                    String(row[header.key as keyof T])
+                  )}
+                </span>
+              </ResponsiveTableCell>
+            ))}
+          </ResponsiveTableRow>
+        ))}
+        <PaginationContainer>
+          <Pagination
+            count={Math.ceil(totalRows / rowsPerPage)}
+            page={page}
+            onChange={(_, newPage) => onChangePage(newPage)}
+            shape="rounded"
+            variant="outlined"
+            hidePrevButton
+            hideNextButton
+            sx={{
+              '& .MuiPaginationItem-root': {
+                fontSize: '1.2rem',
+                minWidth: '2.5rem',
+                minHeight: '2.5rem',
+                backgroundColor: '#FFFFFF',
+                border: 'none',
+                '&:hover': {
+                  border: '1px solid #000',
+                },
+                '&.Mui-selected': {
+                  border: '1px solid #999',
+                  '&:hover': {
+                    border: '1px solid #999',
+                    backgroundColor: '#FFFFFF',
+                  },
+                },
+              },
+            }}
+          />
+          <PageInfo>
+            Page {page} of {Math.ceil(totalRows / rowsPerPage)}
+          </PageInfo>
+        </PaginationContainer>
+      </ResponsiveTableContainer>
     </TableContainerStyled>
   );
 };

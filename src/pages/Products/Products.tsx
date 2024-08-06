@@ -10,7 +10,7 @@ const Products: React.FC = () => {
   const rowsPerPage = 20;
   const { addLog } = useLogs();
 
-  const { data, error, isLoading, refetch } = useQuery<ApiResponse<Product>>(['products', page, rowsPerPage], () => fetchProducts(page, rowsPerPage), {
+  const { data, error, isLoading } = useQuery<ApiResponse<Product>>(['products', page, rowsPerPage], () => fetchProducts(page, rowsPerPage), {
     keepPreviousData: true,
     onSuccess: (data) => {
       if (data.logs) {
@@ -20,8 +20,8 @@ const Products: React.FC = () => {
   });
 
   const handleReload = () => {
-    refetch();
-  }
+    window.location.reload();
+  };
 
   const handleChangePage = (newPage: number) => {
     setPage(newPage);

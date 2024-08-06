@@ -10,7 +10,7 @@ const Employees: React.FC = () => {
   const rowsPerPage = 20;
   const { addLog } = useLogs();
 
-  const { data, error, isLoading, refetch } = useQuery<ApiResponse<Employee>>(['employees', page, rowsPerPage], () => fetchEmployees(page, rowsPerPage), {
+  const { data, error, isLoading } = useQuery<ApiResponse<Employee>>(['employees', page, rowsPerPage], () => fetchEmployees(page, rowsPerPage), {
     keepPreviousData: true,
     onSuccess: (data) => {
       if (data.logs) {
@@ -20,7 +20,7 @@ const Employees: React.FC = () => {
   });
 
   const handleReload = () => {
-    refetch();
+    window.location.reload();
   };
 
   const handleChangePage = (newPage: number) => {
