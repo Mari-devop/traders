@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Table, TableBody, TableRow, TableHead, Pagination } from '@mui/material';
 import {
   TableContainerStyled, TableContainer, Header, TableHeader, FirstTableHeader, PaginationContainer,
