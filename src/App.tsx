@@ -41,7 +41,7 @@ const App = () => {
       <Sidebar />
       <ContentContainer>
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/suppliers" element={<Suppliers />} />
           <Route path="/suppliers/:id" element={<UserPage title="Supplier" headers={supplierHeaders} backLink="/suppliers" fetchFunction={fetchSupplierById} />} />
@@ -61,7 +61,7 @@ const App = () => {
 };
 
 const AppWrapper = () => (
-  <Router basename="/traders">
+  <Router>
     <App />
   </Router>
 );
