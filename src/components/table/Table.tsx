@@ -41,6 +41,7 @@ const TableComponent = <T extends { id: string }>({
     window.scrollTo(0, 0);
   }, [page]);
 
+const totalPages = totalRows > 0 ? Math.ceil(totalRows / rowsPerPage) : 1;
   return (
     <TableContainerStyled>
       <TableContainer>
@@ -84,8 +85,9 @@ const TableComponent = <T extends { id: string }>({
           </TableBody>
         </Table>
         <PaginationContainer>
+        {totalPages > 1 && (
           <Pagination
-            count={Math.ceil(totalRows / rowsPerPage)}
+            count={totalPages}
             page={page}
             onChange={(_, newPage) => onChangePage(newPage)}
             shape="rounded"
@@ -97,7 +99,7 @@ const TableComponent = <T extends { id: string }>({
                 fontSize: '1.2rem',
                 minWidth: '2.5rem',
                 minHeight: '2.5rem',
-                backgroundColor: 'transparent',
+                backgroundColor: '#FFFFFF !important',
                 border: 'none',
                 '&:hover': {
                   border: '1px solid #000',
@@ -106,16 +108,18 @@ const TableComponent = <T extends { id: string }>({
                   border: '1px solid #999',
                   '&:hover': {
                     border: '1px solid #999',
-                    backgroundColor: 'transparent',
+                    backgroundColor: '#FFFFFF !important',
                   },
                 },
               },
             }}
           />
-          <PageInfo>
-            Page {page} of {Math.ceil(totalRows / rowsPerPage)}
-          </PageInfo>
-        </PaginationContainer>
+        )}
+        <PageInfo>
+          Page {page} of {totalPages}
+        </PageInfo>
+      </PaginationContainer>
+
       </TableContainer>
       <ResponsiveTableContainer>
         <Header>
@@ -161,7 +165,7 @@ const TableComponent = <T extends { id: string }>({
                 fontSize: '1.2rem',
                 minWidth: '2.5rem',
                 minHeight: '2.5rem',
-                backgroundColor: '#FFFFFF',
+                backgroundColor: '#FFFFFF !important',
                 border: 'none',
                 '&:hover': {
                   border: '1px solid #000',
@@ -170,7 +174,7 @@ const TableComponent = <T extends { id: string }>({
                   border: '1px solid #999',
                   '&:hover': {
                     border: '1px solid #999',
-                    backgroundColor: '#FFFFFF',
+                    backgroundColor: '#FFFFFF !important',
                   },
                 },
               },

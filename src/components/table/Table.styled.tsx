@@ -131,7 +131,7 @@ export const StyledTableCell = styled(TableCell)`
   font-weight: 500 !important;
   padding: 7px 10px !important;
   font-family: var(--font-family);
-  color: var(--black-color);
+  color: var(--black-color) !important;
 
   &.no-avatar {
     padding-left: 10px !important;
@@ -161,7 +161,7 @@ export const StyledLink = styled(Link)`
   text-decoration: none;
   color: var(--link-color);
   font-family: var(--font-family);
-  
+  font-weight: 500;
   &:hover {
     cursor: pointer;
   }
@@ -222,6 +222,6 @@ export const PaginationContainer = styled.div`
 
 export const PageInfo = styled.div`
   font-size: 14px;
-  color: var (--primary-text-color);
+  color: #202020;
   font-family: var(--font-family);
 `;

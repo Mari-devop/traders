@@ -10,7 +10,7 @@ export const ResultName = styled.h3`
 
   a {
     text-decoration: none;
-    color: var(--link-color);
+    color: #2563EB;
     font-weight: 500;
     font-size: 16px;
 
@@ -22,7 +22,8 @@ export const ResultName = styled.h3`
 
 export const ResultDetails = styled.p`
   margin: 0;
-  color: var(--secondary-text-color);
+  color: var(--result-text-color) !important;
+  font-weight: 500;
 `;
 
 export const ResultContent = styled.div`

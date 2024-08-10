@@ -65,16 +65,17 @@ export const SearchBar = styled.div`
     border-radius: 4px;
     margin-right: 10px;
     font-size: 16px;
-    outline: none;
     width: 500px;
     position: relative;
     background-color: var(--white-color);
     color: var(--black-color);
-    transition: border-color 0.3s, box-shadow 0.3s;
+    transition: border-color 0.3s, box-shadow 0.3s, outline 0.3s;
   }
 
   input:focus {
-    box-shadow: 0 0 0 3px rgba(0, 0, 255, 0.2);
+    outline: none; 
+    box-shadow: 0 0 0 3px var(--outline-color); 
+    border-radius: 4px; 
   }
 
   svg {
@@ -97,6 +98,8 @@ export const SearchBar = styled.div`
     }
   }
 `;
+
+
 
 export const RadioWrapper = styled.div`
   margin-bottom: 20px;

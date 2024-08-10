@@ -35,8 +35,6 @@ export const TimeDisplay = styled(Typography)`
   font-size: 16px !important;
   flex-grow: 1;
   font-family: var(--font-family) !important;
-
- 
 `;
 
 export const DropdownButton = styled(Button)<{ menuOpen: boolean }>`
@@ -100,6 +98,7 @@ export const CustomMenuItem = styled(MenuItem)`
   display: flex;
   align-items: center;
   gap: 10px;
+  color: var(--black-color) !important;
   font-size: .875rem !important;
   font-weight: 500 !important;
   svg {
